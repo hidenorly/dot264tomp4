@@ -6,11 +6,13 @@ Convert .264 to .mp4
 
 The following steps are for Mac OS X.
 
+## Install ffmpeg
+
 ```
 $ brew install ffmpeg
 ```
 
-# Build x264 with mp4 file support
+## Build x264 with mp4 file support
 
 ```
 $ brew install gpac
@@ -34,7 +36,7 @@ $ make -j 10
 Note that you need to add PATH to the built x264.
 
 
-# split264
+## split264
 
 https://www.spitzner.org/kkmoon.html
 The 2nd code is needed to save as "split264.c"

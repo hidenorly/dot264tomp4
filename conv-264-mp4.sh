@@ -15,11 +15,19 @@
 # limitations under the License.
 
 split264 $1
-FILENAME=`echo $1 | sed -E 's/.264//'`
-x264 $FILENAME.h264 -o $FILENAME_tmp.mp4
-ffmpeg -i $FILENAME_tmp.mp4 -i $FILENAME.wav -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 $FILENAME.mp4
-rm $FILENAME_tmp.mp4
-rm $FILENAME.wav
-rm $FILENAME.h264
-rm $FILENAME.audio.ts.txt
-rm $FILENAME.video.ts.txt
+FILENAME=`echo $1 | sed -E 's/\.264//'`
+FILENAME_H264=$FILENAME.h264
+FILENAME_WAV=$FILENAME.wav
+FILENAME_TMP_MP4=$FILENAME_tmp.mp4
+FILENAME_MP4=$FILENAME.mp4
+if [ -f "$FILENAME_H264" ]; then
+	x264 $FILENAME_H264 -o $FILENAME_TMP_MP4
+	if [ -f "$FILENAME_TMP_MP4" ]; then
+		ffmpeg -y -i $FILENAME_TMP_MP4 -i $FILENAME_WAV -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 $FILENAME_MP4
+		rm $FILENAME_TMP_MP4
+		rm $FILENAME_WAV
+		rm $FILENAME_H264
+		rm $FILENAME.audio.ts.txt
+		rm $FILENAME.video.ts.txt
+	fi
+fi
